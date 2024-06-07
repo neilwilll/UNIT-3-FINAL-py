@@ -1,0 +1,73 @@
+base.html
+<link rel="stylesheet" href="/static/site.css"/>
+
+{% extends 'base.html' %}
+
+{% block body %}
+  {% for melon in melon_list %}
+  <div class="card text-center">
+    <div class="navbar-nav">
+        <a class="nav-link" href="/melons">All Melons</a>
+        <a class="nav-link" href="/cart">My Shopping Cart</a>
+     </div>
+    <h2>{{ melon.common_name }}</h2>
+    <img class="melon-image" src="{{ melon.image_url }}">
+    <h5>Price per melon: {{ melon.price_str() }}</h5>
+
+    <ul>
+        <li>Color: {{ melon.color }}</li>
+        {% if melon.seedless %}
+           <li>Seedless melon</li>
+        {% else %}
+           <li>Warning! This melon has seeds</li>
+        {% endif %}
+        </ul>
+        <div class="container">
+            {% for message in get_flashed_messages() %}
+               <p class="alert alert-warning">{{ message }}</p>
+            {% endfor %}
+    <div>
+       <h5>  <h5>Price per melon: {{ melon.price_str() }}</h5>
+          <a href="{{ url_for('melon_details', melon_id=melon.melon_id) }}">
+    {{ melon.common_name }}</a>
+       </h5>
+       {{ melon.price_str() }}
+    </div>
+   BODY OF PAGE GOES HERE VIA INHERITANCE
+{% endblock %}
+</div>
+
+.melon-image {
+    height: 300px;
+    width: 300px;
+ }
+ 
+ #melon-list {
+    display: flex;
+    flex-wrap: wrap;
+ }
+
+ {% extends 'base.html' %}
+
+{% block body %}
+   <h2>Please Sign In</h2>
+
+   <form method="POST" action="/login">
+      <div>{{ form.username.label }}: {{ form.username }}</div>
+      <div>{{ form.password.label }}: {{ form.password }}</div>
+      {{ form.csrf_token }}
+      <button class="btn btn-primary" type="submit">Sign In</button>
+   </form>
+
+{% endblock %}
+
+<div class="navbar-nav">
+    <a class="nav-link" href="/melons">All Melons</a>
+    <a class="nav-link" href="/cart">My Shopping Cart</a>
+    {% if 'username' in session %}
+       <a class="nav-link" href="/logout">Log Out</a>
+    {% else %}
+       <a class="nav-link" href="/login">Log In</a>
+    {% endif %}
+ </div>
+ <a class="btn btn-primary">Add to Cart</a>

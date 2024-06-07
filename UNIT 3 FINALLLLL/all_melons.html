@@ -1,0 +1,27 @@
+all_melons.html
+
+<a href="/melon/{{ melon.melon_id }}">
+
+<a href="{{ url_for('melon_details', melon_id=melon.melon_id }}">
+
+    {% for melon in melon_list %}
+    <div>
+       <h5>
+          <a href="{{ url_for('melon_details', melon_id=melon.melon_id) }}">
+    {{ melon.common_name }}</a>
+       </h5>
+       {{ melon.price_str() }}
+    </div>
+    {% endfor %}
+
+    {% extends 'base.html' %}
+
+{% block body %}
+   <ul>
+   {% for melon_id, qty in session['cart'].items() %}
+      <li>{{melon_id}}: {{qty}}</li>
+   {% endfor %}
+   </ul>
+{% endblock %}
+
+<img class="melon-image" src="{{ melon.image_url }}">
